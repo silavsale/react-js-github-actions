@@ -1,0 +1,25 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          start: npm run start
+          wait-on: "http://localhost:3000"
+          browser: chrome
+          record: true
+          group: "GitHub Actions"
